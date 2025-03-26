@@ -11,7 +11,7 @@ public class FileCabinetImpl implements Cabinet {
 
     @Override
     public Optional<Folder> findFolderByName(String name) {
-        var findFolder = getAllFolders(folders)
+        var findFolder = getAllFolders(folders).stream()
                 .filter(folder -> folder.getName().equals(name))
                 .findFirst();
         if (findFolder.isEmpty()) {
@@ -22,7 +22,7 @@ public class FileCabinetImpl implements Cabinet {
 
     @Override
     public List<Folder> findFoldersBySize(String size) {
-        var findFolders = getAllFolders(folders)
+        var findFolders = getAllFolders(folders).stream()
                 .filter(findFolder -> findFolder.getSize().equals(size))
                 .toList();
         if (findFolders.isEmpty()) {
@@ -33,17 +33,19 @@ public class FileCabinetImpl implements Cabinet {
 
     @Override
     public int count() {
-        return (int) getAllFolders(folders).count();
+        return getAllFolders(folders).size();
     }
 
-    private Stream<Folder> getAllFolders(List<Folder> folders) {
-        return folders.stream().flatMap(folder -> {
+    private List<Folder> getAllFolders(List<Folder> folders) {
+        return folders.stream()
+                .flatMap(folder -> {
             if (folder instanceof MultiFolder) {
-                return Stream.concat(Stream.of(folder), getAllFolders(((MultiFolder) folder).getFolders()));
+                return Stream.concat(Stream.of(folder), getAllFolders(((MultiFolder) folder).getFolders()).stream());
             } else {
                 return Stream.of(folder);
             }
-        });
+        })
+                .toList();
     }
 
 }
