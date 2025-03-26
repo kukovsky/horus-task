@@ -9,7 +9,7 @@ import static org.junit.jupiter.api.Assertions.*;
 class FileCabinetImplTest {
 
     @Test
-    void thatFolderCanBeFindCorrectlyByName() {
+    void thatFolderCanBeFoundCorrectlyByName() {
         // given
         // Create a list of folders
         List<Folder> folders = new ArrayList<>();
@@ -44,7 +44,7 @@ class FileCabinetImplTest {
     }
 
     @Test
-    void thatFolderCanBeFindBySize() {
+    void thatFolderCanBeFoundBySize() {
         // given
         // Create a list of folders
         List<Folder> folders = new ArrayList<>();
