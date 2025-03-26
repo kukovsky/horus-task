@@ -15,7 +15,7 @@ public class FileCabinetImpl implements Cabinet {
                 .filter(folder -> folder.getName().equals(name))
                 .findFirst();
         if (findFolder.isEmpty()) {
-            System.out.println("Folder not found");
+            throw new NotFoundException("Folder with name: " + name + " not found");
         }
         return findFolder;
     }
@@ -26,7 +26,7 @@ public class FileCabinetImpl implements Cabinet {
                 .filter(findFolder -> findFolder.getSize().equals(size))
                 .toList();
         if (findFolders.isEmpty()) {
-            System.out.println("Folders not found");
+            throw new NotFoundException("Folders with size: " + size + " not found");
         }
         return findFolders;
     }
